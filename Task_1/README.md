@@ -54,39 +54,7 @@ sudo apt install libopencv-dev clang libclang-dev
 sudo apt install libgomp1
 ```
 
-## Installation
 
-1. Clone this repository:
-
-   ```bash
-   git clone https://github.com/ranjanchoubey/image-generation.git
-   cd image-generation
-   ```
-
-2. Build the project:
-
-   ```bash
-   cargo build --release
-   ```
-
-## Downloading the Model
-
-1. Download a pre-trained face detection PyTorch model and convert it to TorchScript format.
-
-   You can use models like:
-   - YOLOv5-face: https://github.com/deepcam-cn/yolov5-face
-   - RetinaFace: https://github.com/biubug6/Pytorch_Retinaface
-
-2. For YOLOv5-face, you can convert to TorchScript using:
-
-   ```python
-   import torch
-   model = torch.hub.load('deepcam-cn/yolov5-face', 'yolov5s_face', pretrained=True)
-   script_model = torch.jit.script(model)
-   script_model.save("model.pt")
-   ```
-
-3. Place the converted `model.pt` file in your project directory.
 
 ## Usage
 
