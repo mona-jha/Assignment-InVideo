@@ -1,0 +1,5 @@
+/target
+data/*
+data/WIDER_train.zip
+*.zip
+YOLO_model/venv

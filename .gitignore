@@ -1,0 +1,96 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.env
+.venv
+env.bak/
+venv.bak/
+
+# PyTorch models and checkpoints
+# Comment out if you want to include models in your repo
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+checkpoints/
+pretrained_models/
+
+# Data directories
+# Never commit large datasets to git
+data/*
+!data/*.py
+!data/README.md
+sample_faces/
+faces_dataset/
+*.zip
+*.tar
+*.gz
+WIDER_train.zip
+
+# Generated outputs
+generated_*/
+samples/
+encoded_generated_results/
+face_generation_results/
+outputs/
+inference/
+zero_shot_results/
+embedding_cache/
+
+# Logs
+logs/
+*.log
+tb_logs/
+wandb/
+
+# Images (optionally exclude from git)
+# Comment these out if you want to include example images
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+.ipynb_checkpoints/
+
+# Keep important files for reproducibility
+# Do NOT ignore these files that should be in version control
+requirements.txt
+requirements_minimal.txt
+Dockerfile
+setup_venv.sh
+install_minimal.sh
+install_requirements.sh
+run_pipeline.sh
