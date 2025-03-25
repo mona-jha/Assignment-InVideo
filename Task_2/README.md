@@ -7,10 +7,7 @@ This project fine-tunes DINOV2 on face datasets and trains a generator model to 
 1. **Encoding Stage**: A fine-tuned DINOV2 model extracts meaningful face embeddings from input images
 2. **Generation Stage**: A trained generator network reconstructs face images from these embeddings
 
-<div align="center">
-  <img src="docs/architecture.png" width="80%" alt="System Architecture">
-  <p><em>System Architecture: Fine-tuned DINOv2 Embedder → 512-dim Embedding Vector → Generator → 128×128 Face Reconstruction</em></p>
-</div>
+
 
 ## How It Works
 
@@ -59,126 +56,7 @@ This will:
 3. Feed these embeddings to the generator to produce reconstructed faces
 4. Save the original images, generated images, and side-by-side comparisons
 
-### Training the Complete Pipeline
 
-For end-to-end training of the face generation system:
-
-```bash
-./run_pipeline.sh
-```
-
-Or manually:
-
-```bash
-# 1. Fine-tune the DINOV2 model
-python finetune_dinov2.py \
-  --data_dir /path/to/face/dataset \
-  --output_path finetuned_dinov2_faceembedder.pth \
-  --epochs 5
-
-# 2. Train the generator
-python -m face_generation.main \
-  --mode train_gan \
-  --data_dir /path/to/face/dataset \
-  --embedder_path finetuned_dinov2_faceembedder.pth \
-  --generator_path generator.pth
-```
-
-## Computing Requirements and Production Considerations
-
-### Development Environment
-
-Our model development was conducted with the following resources:
-
-- **GPU**: NVIDIA RTX A6000 (24GB VRAM)
-- **CPU**: 8 cores, Intel Xeon
-- **RAM**: 32GB
-- **Storage**: 100GB SSD
-- **Training Time**: 
-  - DINOV2 Fine-tuning: ~2 hours
-  - GAN Training: ~4 hours
-
-### Production Deployment Options
-
-For production deployment, we recommend:
-
-#### Option 1: On-premises GPU Server (High Performance)
-- **Hardware**: 
-  - NVIDIA T4 or A10 GPU (minimum 16GB VRAM)
-  - 8+ CPU cores
-  - 32GB+ RAM
-  - 100GB+ SSD storage
-- **Software**:
-  - Docker container deployment
-  - Model serving with TorchServe or NVIDIA Triton
-  - API gateway for request handling
-
-#### Option 2: Cloud-based Deployment (Scalable)
-- **Services**:
-  - AWS SageMaker or Google Vertex AI for model serving
-  - GPU instances (e.g., g4dn.xlarge on AWS)
-  - Auto-scaling configuration for demand fluctuation
-  - CDN for serving generated images
-- **Optimization**:
-  - Model quantization to INT8 for faster inference
-  - TorchScript or ONNX model export
-
-#### Option 3: Edge Deployment (Low Latency)
-- **Hardware**: NVIDIA Jetson AGX Orin or equivalent
-- **Optimization**:
-  - Model pruning and quantization
-  - TensorRT conversion
-  - Batch processing for efficiency
-
-For all scenarios, we recommend:
-- A/B testing different model versions
-- Continuous monitoring of inference quality
-- Regular retraining with new data
-- End-to-end testing pipeline
-
-## Installation
-
-### Prerequisites
-- Python 3.8+
-- CUDA toolkit 11.6+ (for GPU acceleration)
-- 10GB+ disk space
-
-### Standard Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/face-generation.git
-cd face-generation
-
-# Setup virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-### Option 2: Docker Installation
-
-```bash
-# Build the Docker image
-docker build -t face-generation .
-
-# Run the container
-docker run --gpus all -it face-generation
-```
-
-### Low Disk Space Installation
-
-If you're working with limited disk space:
-
-```bash
-# Make the script executable
-chmod +x install_minimal.sh
-
-# Run the minimal installation
-./install_minimal.sh
-```
 
 ## Command-Line Interface
 
@@ -239,63 +117,11 @@ python -m face_generation.main --mode evaluate \
   --output_dir outputs
 ```
 
-### Interactive Demo
 
-For a visual interactive demo:
 
-```bash
-streamlit run demo_app.py
-```
 
-## GitHub Repository Structure
 
-When setting up this project on GitHub, we recommend:
 
-### Repository Structure
-
-```
-face-generation/
-├── data/                      # Dataset handling scripts (not the actual data)
-├── docs/                      # Documentation and diagrams
-├── face_generation/           # Main module
-│   ├── __init__.py
-│   ├── models.py              # Model architectures
-│   ├── datasets.py            # Dataset classes
-│   ├── training.py            # Training functions
-│   ├── evaluation.py          # Evaluation functions
-│   ├── utils.py               # Utility functions
-│   └── main.py                # Command-line interface
-├── scripts/                   # Utility scripts
-│   ├── setup_venv.sh          # Environment setup script
-│   └── install_minimal.sh     # Minimal installation script
-├── tests/                     # Unit tests
-├── .gitignore                 # Git ignore file
-├── requirements.txt           # Standard requirements
-└── README.md                  # Main documentation
-```
-
-### Commit History
-
-We recommend preserving the development history in git:
-
-- **Don't squash commits** for main development branches
-- Use semantic commit messages (e.g., `feat:`, `fix:`, `docs:`)
-- Tag significant versions (e.g., `v1.0.0`)
-- Maintain clear branch structures:
-  - `main`: Stable releases
-  - `dev`: Development branch
-  - Feature branches for specific enhancements
-
-## Results and Examples
-
-Our model achieves excellent results in reconstructing faces from embeddings:
-
-- **SSIM Score**: 0.85+
-- **PSNR**: 25dB+
-- **Embedding Similarity**: 0.95+
-- **Zero-shot Performance**: Successfully generates faces for embedding vectors from entirely unseen images
-
-For detailed examples, see the [inference_demo.ipynb](notebooks/inference_demo.ipynb) notebook.
 
 ## License
 
