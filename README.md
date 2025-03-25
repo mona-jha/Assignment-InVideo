@@ -1,4 +1,7 @@
 # Rust-Pytorch-Assignment-InVideo
+# Cropped Face 
+![image](https://github.com/user-attachments/assets/c9b69cd7-105c-4df6-a8a3-0d2b874a0012)
+
 
 # Final Result:
 
