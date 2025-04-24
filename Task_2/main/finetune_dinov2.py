@@ -6,9 +6,9 @@ import os
 import torch
 import argparse
 from tqdm import tqdm
-from face_generation.models import DinoEmbedder
-from face_generation.datasets import FaceDataset, create_dataloaders
-from face_generation.utils import setup_device
+from main.models import DinoEmbedder
+from utils.datasets import FaceDataset, create_dataloaders
+from utils import setup_device
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Fine-tune DINOV2 for face embeddings")
