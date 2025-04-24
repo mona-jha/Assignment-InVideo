@@ -76,7 +76,7 @@ python finetune_dinov2.py \
 
 ```bash
 python -m main.main \
-  --mode train_gan \
+  --mode train \
   --data_dir /path/to/face/data \
   --embedder_path finetuned_dinov2_faceembedder.pth \
   --generator_path generator.pth \
@@ -85,21 +85,14 @@ python -m main.main \
   --lr 1e-4
 ```
 
-### Generating Images
 
-```bash
-python -m main.main --mode generate \
-  --data_dir /path/to/test/data \
-  --embedder_path outputs/finetuned_dinov2_faceembedder.pth \
-  --generator_path outputs/gan_generator.pth \
-  --output_dir outputs
-```
 
-### Test Zero-Shot Generalization
+
+### Test  Generalization
 
 ```bash
 python -m main.main \
-  --mode zero_shot \
+  --mode inference \
   --data_dir /path/to/test/data \
   --embedder_path finetuned_dinov2_faceembedder.pth \
   --generator_path generator.pth \
@@ -107,15 +100,7 @@ python -m main.main \
   --num_samples 5
 ```
 
-### Evaluating the Model
 
-```bash
-python -m main.main --mode evaluate \
-  --data_dir /path/to/test/data \
-  --embedder_path outputs/finetuned_dinov2_faceembedder.pth \
-  --generator_path outputs/gan_generator.pth \
-  --output_dir outputs
-```
 
 
 
