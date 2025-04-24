@@ -11,10 +11,10 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from ..main.models import DinoEmbedder, EmbeddingToImageGenerator
-from .datasets import FaceDataset, EmbeddingImageDataset, create_dataloaders
-from .utils import save_images, perceptual_loss
-from .evaluation import generate_and_compare_samples
+from main.models import DinoEmbedder, EmbeddingToImageGenerator
+from utils.datasets import FaceDataset, EmbeddingImageDataset, create_dataloaders
+from utils.utils import save_images, perceptual_loss
+from utils.evaluation import generate_and_compare_samples
 
 def train_embedder(
     data_dir, 
