@@ -50,8 +50,7 @@ def generate_and_compare_samples(generator, dataloader, output_dir="generated_fa
                 img_name = f"compare_{i*4 + j}.jpg" if epoch is None else f"epoch{epoch:02d}_img{i*4 + j}.jpg"
                 Image.fromarray(combined).save(os.path.join(output_dir, img_name))
 
-            if i >= 2:
-                break
+
 
 def create_training_progress_gif(image_folder, output_gif="training_progress.gif", max_images=100, duration=400):
     images = sorted(glob.glob(os.path.join(image_folder, "epoch*_img0.jpg")))[:max_images]
@@ -65,6 +64,6 @@ def create_training_progress_gif(image_folder, output_gif="training_progress.gif
             duration=duration,
             loop=0
         )
-        print(f"🎞️ GIF saved at {os.path.join(image_folder, output_gif)}")
+        print(f" GIF saved at {os.path.join(image_folder, output_gif)}")
     else:
-        print("⚠️ No images found to create GIF.")
+        print(" No images found to create GIF.")
