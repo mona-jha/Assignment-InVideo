@@ -4,18 +4,28 @@ from PIL import Image
 import glob
 import torch
 from tqdm import tqdm
-
-
-
-
+from torchvision.utils import save_image
+import torchvision.transforms as transforms
 
 def generate_images(encoder, generator, dataloader, output_dir="generated_images", device="cpu"):
     os.makedirs(output_dir, exist_ok=True)
     generator.eval()
     encoder.eval()
+    
+    # Create a transform to handle PIL Images if needed
+    to_tensor = transforms.ToTensor()
+    normalize = transforms.Normalize(mean=[0.5]*3, std=[0.5]*3)
+    
     with torch.no_grad():
         for i, (images, _) in enumerate(tqdm(dataloader, desc="Generating images")):
-            images = images.to(device)
+            # Handle both tensor and PIL Image inputs
+            if isinstance(images, Image.Image):
+                images = normalize(to_tensor(images)).unsqueeze(0).to(device)
+            elif isinstance(images, list) and isinstance(images[0], Image.Image):
+                images = torch.stack([normalize(to_tensor(img)) for img in images]).to(device)
+            else:
+                images = images.to(device)
+                
             embeddings = encoder(images)
             generated = generator(embeddings)
             for j in range(generated.size(0)):
