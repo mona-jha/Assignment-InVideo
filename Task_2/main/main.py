@@ -11,7 +11,7 @@ from main.models import DinoEmbedder, EmbeddingToImageGenerator
 from utils.datasets import FaceDataset, EmbeddingImageDataset, create_dataloaders
 from utils.training import train_embedder
 from utils.evaluation import generate_images, test_zero_shot_generalization
-from .utils import setup_device
+from utils.utils import setup_device
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Face Generation Pipeline")
