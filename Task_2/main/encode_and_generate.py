@@ -14,7 +14,7 @@ import torchvision.transforms as transforms
 from torchvision.utils import save_image
 from tqdm import tqdm
 
-from face_generation.models import DinoEmbedder, EmbeddingToImageGenerator
+from main.models import DinoEmbedder, EmbeddingToImageGenerator
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Encode Images and Generate Faces")
