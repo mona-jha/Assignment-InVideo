@@ -17,6 +17,13 @@ class ImagePathDataset(Dataset):
     def __init__(self, paths, transform=None):
         self.paths = paths
         self.transform = transform
+        # Add default transform if not provided to convert PIL images to tensors
+        if self.transform is None:
+            self.transform = transforms.Compose([
+                transforms.Resize((224, 224)),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.5]*3, std=[0.5]*3)
+            ])
 
     def __len__(self):
         return len(self.paths)
@@ -82,7 +89,7 @@ def main():
         print("===== Training Image Generator =====")
         print(f"Loading embedder from {args.embedder_path}")
         embedder = DinoEmbedder().to(device)
-        embedder.load_state_dict(torch.load(args.embedder_path, map_location=device))
+        embedder.load_state_dict(torch.load(args.embedder_path, map_location=device, weights_only=True))
         embedder.eval()
         print(" Embedder loaded")
 
@@ -104,12 +111,12 @@ def main():
         # Load embedder
         print(f"Loading embedder from {args.embedder_path}")
         embedder = DinoEmbedder().to(device)
-        embedder.load_state_dict(torch.load(args.embedder_path, map_location=device))
+        embedder.load_state_dict(torch.load(args.embedder_path, map_location=device, weights_only=True))
         embedder.eval()
         # Load generator
         print(f"Loading generator from {args.generator_path}")
         generator = EmbeddingToImageGenerator().to(device)
-        generator.load_state_dict(torch.load(args.generator_path, map_location=device))
+        generator.load_state_dict(torch.load(args.generator_path, map_location=device, weights_only=True))
         generator.eval()
 
         # Build test DataLoader
@@ -168,7 +175,7 @@ def main():
         
         # Load checkpoint
         print(f"Loading checkpoint from {args.inference_ckp}")
-        checkpoint = torch.load(args.inference_ckp, map_location=device)
+        checkpoint = torch.load(args.inference_ckp, map_location=device, weights_only=True)
         
         # Initialize models
         embedder = DinoEmbedder().to(device)
@@ -185,12 +192,12 @@ def main():
                 generator.load_state_dict(checkpoint['gen'])
             else:
                 print("Warning: Checkpoint format not recognized. Trying direct load.")
-                embedder.load_state_dict(torch.load(args.embedder_path, map_location=device))
+                embedder.load_state_dict(torch.load(args.embedder_path, map_location=device, weights_only=True))
                 generator.load_state_dict(checkpoint)
         else:
             print("Warning: Checkpoint is not a dictionary. Using default paths.")
-            embedder.load_state_dict(torch.load(args.embedder_path, map_location=device))
-            generator.load_state_dict(torch.load(args.generator_path, map_location=device))
+            embedder.load_state_dict(torch.load(args.embedder_path, map_location=device, weights_only=True))
+            generator.load_state_dict(torch.load(args.generator_path, map_location=device, weights_only=True))
         
         embedder.eval()
         generator.eval()
