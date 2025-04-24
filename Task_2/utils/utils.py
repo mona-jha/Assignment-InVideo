@@ -12,14 +12,22 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 vgg = vgg16(weights=VGG16_Weights.IMAGENET1K_V1).features[:16].eval().to(device)
 for param in vgg.parameters():
     param.requires_grad = False
-
+def save_images(tensor_batch, output_dir, prefix="gen", nrow=4):
+    """
+    Save a batch of images (tensor format) to disk.
+    """
+    os.makedirs(output_dir, exist_ok=True)
+    for i, img in enumerate(tensor_batch):
+        save_path = os.path.join(output_dir, f"{prefix}_{i}.png")
+        save_image(img, save_path)
+    print(f" Saved {len(tensor_batch)} images to {output_dir}")
 def perceptual_loss(generated, target):
     return F.l1_loss(vgg(generated), vgg(target))
 
 def save_model(model, filename, save_dir="checkpoints"):
     os.makedirs(save_dir, exist_ok=True)
     torch.save(model.state_dict(), os.path.join(save_dir, filename))
-    print(f"💾 Model saved at {os.path.join(save_dir, filename)}")
+    print(f" Model saved at {os.path.join(save_dir, filename)}")
 
 def setup_device():
     """Set up and return the device (CPU/GPU)"""
@@ -32,7 +40,7 @@ def save_embeddings(embeddings, output_dir, prefix="embedding"):
     os.makedirs(output_dir, exist_ok=True)
     for i, embedding in enumerate(embeddings):
         torch.save(embedding.cpu(), os.path.join(output_dir, f"{prefix}_{i}.pt"))
-    print(f"✅ Saved {len(embeddings)} embeddings to {output_dir}")
+    print(f" Saved {len(embeddings)} embeddings to {output_dir}")
 
 def visualize_embeddings(embeddings, labels=None, output_path=None):
     """
