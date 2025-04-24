@@ -4,6 +4,27 @@ from PIL import Image
 import glob
 import torch
 
+
+
+
+def generate_images(encoder, generator, dataloader, output_dir="generated_images", device="cpu"):
+    os.makedirs(output_dir, exist_ok=True)
+    generator.eval()
+    encoder.eval()
+    with torch.no_grad():
+        for i, (images, _) in enumerate(tqdm(dataloader, desc="Generating images")):
+            images = images.to(device)
+            embeddings = encoder(images)
+            generated = generator(embeddings)
+            for j in range(generated.size(0)):
+                save_image(generated[j], os.path.join(output_dir, f"gen_{i*generated.size(0)+j}.png"))
+
+def test_zero_shot_generalization(encoder, generator, dataloader, output_dir="zero_shot_results", device="cpu"):
+    print(" Running zero-shot generalization test...")
+    generate_images(encoder, generator, dataloader, output_dir, device)
+
+
+
 def generate_and_compare_samples(generator, dataloader, output_dir="generated_faces_compare", epoch=None):
     os.makedirs(output_dir, exist_ok=True)
     generator.eval()
