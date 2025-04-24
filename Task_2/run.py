@@ -1,7 +1,7 @@
 
 
 import argparse
-from face_generation.main import main
+from main.main import main
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run Face Generation Pipeline")
