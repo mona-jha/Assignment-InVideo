@@ -9,7 +9,7 @@ import numpy as np
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 
-from main.models import DinoEmbedder, EmbeddingToImageGenerator
+from main.main import DinoEmbedder, EmbeddingToImageGenerator
 from utils.datasets import EmbeddingImageDataset
 
 def embedding_image_collate(batch):
