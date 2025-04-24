@@ -7,10 +7,10 @@ import argparse
 import torch
 from tqdm import tqdm
 
-from .main.models import DinoEmbedder, EmbeddingToImageGenerator
-from .datasets import FaceDataset, EmbeddingImageDataset, create_dataloaders
-from .training import train_embedder, train_gan
-from .evaluation import generate_images, test_zero_shot_generalization
+from main.models import DinoEmbedder, EmbeddingToImageGenerator
+from utils.datasets import FaceDataset, EmbeddingImageDataset, create_dataloaders
+from utils.training import train_embedder, train_gan
+from utils.evaluation import generate_images, test_zero_shot_generalization
 from .utils import setup_device
 
 def parse_args():
