@@ -51,35 +51,36 @@ class EmbeddingToImageGenerator(nn.Module):
     def __init__(self):
         super().__init__()
         self.fc = nn.Linear(512, 512 * 8 * 8)
-        self.decoder = nn.Sequential(
-            nn.Upsample(scale_factor=2),        # 8x8 → 16x16
-            nn.Conv2d(512, 256, 3, 1, 1),
-            nn.BatchNorm2d(256),
-            nn.Dropout(0.2),
-            nn.ReLU(inplace=True),
-            ResBlock(256),
-        
-            nn.Upsample(scale_factor=2),        # 16x16 → 32x32
-            nn.Conv2d(256, 128, 3, 1, 1),
-            nn.BatchNorm2d(128),
-            nn.Dropout(0.2),
-            nn.ReLU(inplace=True),
-            ResBlock(128),
-        
-            nn.Upsample(scale_factor=2),        # 32x32 → 64x64
-            nn.Conv2d(128, 64, 3, 1, 1),
-            nn.BatchNorm2d(64),
-            nn.Dropout(0.2),
-            nn.ReLU(inplace=True),
-        
-            nn.Upsample(scale_factor=2),        # 64x64 → 128x128 
-            nn.BatchNorm2d(32),
-            nn.Dropout(0.2),
-            nn.ReLU(inplace=True),
-        
-            nn.Conv2d(32, 3, 3, 1, 1),
-            nn.Tanh()
-        )
+       self.decoder = nn.Sequential(
+                nn.Upsample(scale_factor=2),        # 8x8 → 16x16
+                nn.Conv2d(512, 256, 3, 1, 1),
+                nn.BatchNorm2d(256),
+                nn.Dropout(0.2),
+                nn.ReLU(inplace=True),
+                ResBlock(256),
+            
+                nn.Upsample(scale_factor=2),        # 16x16 → 32x32
+                nn.Conv2d(256, 128, 3, 1, 1),
+                nn.BatchNorm2d(128),
+                nn.Dropout(0.2),
+                nn.ReLU(inplace=True),
+                ResBlock(128),
+            
+                nn.Upsample(scale_factor=2),        # 32x32 → 64x64
+                nn.Conv2d(128, 64, 3, 1, 1),
+                nn.BatchNorm2d(64),
+                nn.Dropout(0.2),
+                nn.ReLU(inplace=True),
+            
+                nn.Upsample(scale_factor=2),        # 64x64 → 128x128   (Added Step)
+                nn.Conv2d(64, 32, 3, 1, 1),         # 64 channels → 32 channels
+                nn.BatchNorm2d(32),                 
+                nn.Dropout(0.2),
+                nn.ReLU(inplace=True),
+            
+                nn.Conv2d(32, 3, 3, 1, 1),          # Output 3 channels RGB
+                nn.Tanh()
+            )
 
 
     def forward(self, x):
