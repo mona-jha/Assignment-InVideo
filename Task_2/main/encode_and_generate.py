@@ -62,28 +62,28 @@ def main():
         os.makedirs(os.path.join(args.output_dir, "embeddings"), exist_ok=True)
     
     # Step 1: Load the DINOV2 encoder (fine-tuned)
-    print("\n1️⃣ Loading DINOV2 encoder model...")
+    print("\n1️ Loading DINOV2 encoder model...")
     encoder = DinoEmbedder().to(device)
     encoder.load_state_dict(torch.load(args.embedder_path, map_location=device))
     encoder.eval()
-    print("✅ DINOV2 encoder loaded successfully")
+    print(" DINOV2 encoder loaded successfully")
     
     # Step 2: Load the generator
-    print("\n2️⃣ Loading image generator model...")
+    print("\n2️ Loading image generator model...")
     generator = EmbeddingToImageGenerator().to(device)
     generator.load_state_dict(torch.load(args.generator_path, map_location=device))
     generator.eval()
-    print("✅ Generator loaded successfully")
+    print(" Generator loaded successfully")
     
     # Step 3: Find input images
     all_files = [f for f in os.listdir(args.input_dir) if f.lower().endswith(('.jpg', '.png', '.jpeg'))]
     selected_files = all_files[:args.num_samples] if args.num_samples > 0 else all_files
     selected_paths = [os.path.join(args.input_dir, f) for f in selected_files]
     
-    print(f"\n3️⃣ Found {len(selected_paths)} images to process")
+    print(f"\n3️ Found {len(selected_paths)} images to process")
     
     # Step 4: Process each image - encode and generate
-    print("\n4️⃣ Encoding images and generating reconstructions...")
+    print("\n4️ Encoding images and generating reconstructions...")
     results = []
     
     for i, img_path in enumerate(tqdm(selected_paths)):
@@ -140,7 +140,7 @@ def main():
         plt.savefig(os.path.join(args.output_dir, "visualization.png"))
         plt.show()
     
-    print(f"\n✅ Processing complete! Results saved to: {args.output_dir}")
+    print(f"\n Processing complete! Results saved to: {args.output_dir}")
     print("Summary of steps performed:")
     print("1. Loaded fine-tuned DINOV2 encoder model")
     print("2. Loaded GAN generator model")
