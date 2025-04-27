@@ -52,7 +52,14 @@ def main():
             images = images.to(device)
             
             # Create positive pairs with augmentation
-            aug_images = images + 0.1 * torch.randn_like(images)
+            augment = transforms.Compose([
+                        transforms.RandomHorizontalFlip(),
+                        transforms.ColorJitter(0.2, 0.2, 0.2, 0.1),
+                        transforms.RandomAffine(degrees=10, translate=(0.05, 0.05)),
+                    ])
+                    
+            aug_images = torch.stack([augment(img.cpu()) for img in images]).to(device)
+
             
             optimizer.zero_grad()
             embeddings1 = model(images)
@@ -93,9 +100,10 @@ def main():
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
             torch.save(model.state_dict(), args.output_path)
-            print(f"✅ Saved best model with val loss: {best_val_loss:.4f}")
+            print(f" Saved best model with val loss: {best_val_loss:.4f}")
     
-    print(f"Fine-tuning complete! Model saved to {args.output_path}")
+    print(f" Epoch {epoch+1}: Saved best model with val loss {best_val_loss:.4f}")
+
 
 if __name__ == "__main__":
     main()
