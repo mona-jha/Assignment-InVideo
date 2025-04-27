@@ -104,7 +104,6 @@ def main():
             batch_size=args.batch_size,
             epochs=args.epochs,
             lr=args.lr,
-            max_train_time_hours=args.max_train_time,
             device=device,
             use_embedding_cache=args.use_cache
         )
