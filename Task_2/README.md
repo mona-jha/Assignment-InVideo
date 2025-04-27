@@ -16,7 +16,7 @@ This project fine-tunes DINOV2 on face datasets and trains a generator model to 
 The DINOV2 model is fine-tuned on a face dataset to create a specialized face embedding model:
 
 1. We start with a pre-trained DINOV2-small model from Facebook AI Research
-2. Fine-tune it on our face dataset using contrastive learning techniques
+2. Fine-tune it on our face dataset using contrastive learning techniques(CosineEmbeddingLoss).
 3. The resulting encoder maps each face image to a 512-dimensional embedding vector
 4. These embeddings capture essential facial features in a compact representation
 
@@ -102,8 +102,16 @@ python -m main.main \
 
 
 
+### Zero-Shot Generalization 
 
+```bash
+python -m main.main \
+  --mode inference_test \
+  --dataset celebA \
+  --inference_ckp checkpoints/your_saved_checkpoint.pth \
+  --output_dir outputs/zero_shot
 
+```
 
 
 
