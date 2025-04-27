@@ -97,16 +97,16 @@ def main():
         print(" Embedder loaded")
 
         train_generator(
-            data_dir=args.data_dir,
-            embedder_path=args.embedder_path,
-            output_dir=os.path.join(args.output_dir, "checkpoints"),
-            generator_path=args.generator_path,
-            batch_size=args.batch_size,
-            epochs=args.epochs,
-            lr=args.lr,
-            device=device,
-            use_embedding_cache=args.use_cache
-        )
+                data_dir=args.data_dir,
+                embedder_path=args.embedder_path,
+                output_dir=os.path.join(args.output_dir, "checkpoints"),
+                generator_path=args.generator_path,
+                batch_size=args.batch_size,
+                epochs=args.epochs,
+                lr=args.lr,
+                device=device
+            )
+
 
 
     elif args.mode == "generate":
