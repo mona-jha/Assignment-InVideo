@@ -51,7 +51,7 @@ class EmbeddingToImageGenerator(nn.Module):
     def __init__(self):
         super().__init__()
         self.fc = nn.Linear(512, 512 * 8 * 8)
-       self.decoder = nn.Sequential(
+        self.decoder = nn.Sequential(
                 nn.Upsample(scale_factor=2),        # 8x8 → 16x16
                 nn.Conv2d(512, 256, 3, 1, 1),
                 nn.BatchNorm2d(256),
