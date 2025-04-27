@@ -96,7 +96,7 @@ def main():
         embedder.eval()
         print(" Embedder loaded")
 
-        train_gan(
+        train_generator(
             data_dir=args.data_dir,
             embedder_path=args.embedder_path,
             output_dir=os.path.join(args.output_dir, "checkpoints"),
@@ -108,6 +108,7 @@ def main():
             device=device,
             use_embedding_cache=args.use_cache
         )
+
 
     elif args.mode == "generate":
         print("===== Generating Face Images =====")
