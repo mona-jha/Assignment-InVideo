@@ -161,19 +161,20 @@ def train_generator(
         gen.train()
         train_loss = 0
         for emb, real in tqdm(train_loader, desc=f"[Gen] Epoch {epoch}/{epochs} (train)"):
-            emb  = emb.to(device) + 0.05 * torch.randn_like(emb)  # small embedding noise
+            emb  = emb.to(device) + 0.05 * torch.randn_like(emb).to(device)  # Correct device for noise
             real = real.to(device)
-
+        
             fake = gen(emb)
             if fake.shape != real.shape:
                 real = F.interpolate(real, size=fake.shape[2:])
-
+        
             loss = l1(fake, real) + 5 * perceptual_loss(fake, real)
             opt.zero_grad()
             loss.backward()
             opt.step()
-
+        
             train_loss += loss.item()
+
 
         # ——— Validation ———
         gen.eval()
