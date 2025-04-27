@@ -89,7 +89,10 @@ def main():
         print("===== Training Image Generator =====")
         print(f"Loading embedder from {args.embedder_path}")
         embedder = DinoEmbedder().to(device)
-        embedder.load_state_dict(torch.load(args.embedder_path, map_location=device, weights_only=True))
+        embedder.load_state_dict(torch.load(args.embedder_path, map_location=device))
+
+         
+
         embedder.eval()
         print(" Embedder loaded")
 
