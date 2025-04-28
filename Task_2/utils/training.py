@@ -111,7 +111,7 @@ def train_generator(
     output_dir="generated_samples",
     generator_path="generator_best.pth",
     batch_size=16,
-    epochs=50,
+    epochs=200,
     lr=1e-4,
     device=None
 ):
