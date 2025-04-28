@@ -110,7 +110,7 @@ def train_generator(
     embedder_path,
     output_dir="generated_samples",
     generator_path="generator_best.pth",
-    batch_size=16,
+    batch_size=32,
     epochs=200,
     lr=1e-4,
     device=None
